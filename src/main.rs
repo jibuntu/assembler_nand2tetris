@@ -122,11 +122,9 @@ fn asm_to_hack(asm: String) -> Option<String> {
         match parser.command_type() {
             CommandType::None => return None,
             CommandType::A => {
-                let bin = match i16::from_str(&parser.symbol()) {
+                let mut bin = match i16::from_str(&parser.symbol()) {
                     Ok(number) => {
-                        let mut bin = number_to_16bin(number);
-                        bin[0] = 0; // 先頭を0にする
-                        bin
+                        number_to_16bin(number)
                     },
                     Err(_) => {
                         let symbol = parser.symbol();
@@ -141,6 +139,7 @@ fn asm_to_hack(asm: String) -> Option<String> {
                     }
                 };
 
+                bin[0] = 0; // 先頭を0にする
                 hack += &bin.iter().map(|b| b.to_string()).collect::<String>();
                 hack += "\n";
             },
