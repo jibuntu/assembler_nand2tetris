@@ -52,7 +52,6 @@ impl Parser {
         }
 
         Parser {
-            asm,
             asm_lines,
             command: String::new(),
             count: 0,
