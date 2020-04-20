@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 
 /// symbolの名前とアドレスを管理するためのモジュール
+#[derive(Debug, PartialEq)]
 pub struct SymbolTable {
     table: HashMap<String, usize>
 }
