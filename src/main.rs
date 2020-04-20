@@ -107,5 +107,5 @@ fn main() {
         }
     };
 
-    output_file.write(hack.trim().as_bytes());
+    let _ = output_file.write(hack.trim().as_bytes());
 }

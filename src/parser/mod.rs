@@ -6,7 +6,6 @@
 /// シンボル）へ簡単にアクセスできるようなルーチンを提供する。さらに、空白文字
 /// とコメントを削除する。
 pub struct Parser {
-    asm: String,
     asm_lines: Vec<String>, // 不要なデータを除外した行のvector
     command: String, // 現在のコマンド
     count: usize, // 現在の行数
