@@ -34,7 +34,7 @@ mod test {
 
     #[test]
     fn test_symbol_table_new() {
-        let symbol_table = SymbolTable::new();
+        SymbolTable::new();
     }
 
     #[test]
