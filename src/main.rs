@@ -1,6 +1,8 @@
+// nand2tetris - 6章
+
 use std::env;
 use std::fs::File;
-use std::io::Read;
+use std::io::{Read, Write};
 use std::str::FromStr;
 
 mod parser;
@@ -11,7 +13,7 @@ use code::Code;
 
 
 fn print_usage() {
-    println!("Usage: command <filename>");
+    println!("Usage: command <filename> <output filename>");
 }
 
 /// 数字を16bitのバイナリへ変換する
@@ -40,6 +42,15 @@ fn main() {
         Some(file_name) => file_name,
         None => {
             println!("Error: File name is not exist.");
+            print_usage();
+            return;
+        }
+    };
+
+    let output_file_name = match env::args().nth(2) {
+        Some(file_name) => file_name,
+        None => {
+            println!("Error: Output file name is not exist.");
             print_usage();
             return;
         }
@@ -77,8 +88,8 @@ fn main() {
             },
             CommandType::C => {
                 hack += "111";
-                hack += &Code::dest(&parser.dest()).unwrap();
                 hack += &Code::comp(&parser.comp()).unwrap();
+                hack += &Code::dest(&parser.dest()).unwrap();
                 hack += &Code::jump(&parser.jump()).unwrap();
 
                 hack += "\n";
@@ -86,6 +97,15 @@ fn main() {
             CommandType::L => { /* 今は実装しない */ },
         }
     }
+    
+    let mut output_file = match File::create(&output_file_name) {
+        Ok(file) => file,
+        Err(_) => {
+            println!("Error: {} is not exist.", &file_name);
+            print_usage();
+            return;
+        }
+    };
 
-    println!("{}", hack.trim());
+    output_file.write(hack.trim().as_bytes());
 }
